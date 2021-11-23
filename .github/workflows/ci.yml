@@ -1,0 +1,36 @@
+on:
+  push:
+    branches: 
+      - master
+  pull_request:
+
+name: Tests
+
+defaults:
+  run:
+    shell: bash
+      
+env:
+  CI: true
+  FORCE_COLOR: 2
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Check out the repo"
+        uses: "actions/checkout@v2"
+
+      - name: "Install Node.js"
+        uses: "actions/setup-node@v2"
+
+      - name: "Install"
+        run: "yarn install"
+
+      - name: "Compile"
+        run: "yarn compile"
+
+      - name: "Test"
+        run: "yarn test"

@@ -1,0 +1,699 @@
+[
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "address", "name": "contractAddress", "type": "address" }],
+    "name": "BalanceTrackerAddressSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+    "name": "Paused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "address", "name": "proxyAddress", "type": "address" }],
+    "name": "ProxyAddressSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "uint256", "name": "voteEveryBlockLimit", "type": "uint256" }],
+    "name": "ProxyRateLimitSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "address[]", "name": "accounts", "type": "address[]" },
+      { "indexed": false, "internalType": "bool", "name": "allowed", "type": "bool" }
+    ],
+    "name": "ProxySubmitterSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "bytes32[]", "name": "allValidKeys", "type": "bytes32[]" }],
+    "name": "ReactorKeysSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "uint256", "name": "chainId", "type": "uint256" }],
+    "name": "SigningChainIdSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+    "name": "Unpaused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+    "name": "UserAggregationUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "address", "name": "account", "type": "address" },
+      {
+        "components": [
+          { "internalType": "address", "name": "account", "type": "address" },
+          { "internalType": "bytes32", "name": "voteSessionKey", "type": "bytes32" },
+          { "internalType": "uint256", "name": "nonce", "type": "uint256" },
+          { "internalType": "uint256", "name": "chainId", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalVotes", "type": "uint256" },
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "reactorKey", "type": "bytes32" },
+              { "internalType": "uint256", "name": "amount", "type": "uint256" }
+            ],
+            "internalType": "struct UserVoteAllocationItem[]",
+            "name": "allocations",
+            "type": "tuple[]"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct UserVotePayload",
+        "name": "votes",
+        "type": "tuple"
+      }
+    ],
+    "name": "UserVoted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "token", "type": "address" },
+          { "internalType": "uint256", "name": "multiplier", "type": "uint256" }
+        ],
+        "indexed": false,
+        "internalType": "struct IVoteTracker.VoteTokenMultipler[]",
+        "name": "multipliers",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "VoteMultipliersSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "bytes32", "name": "newKey", "type": "bytes32" },
+      {
+        "components": [
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "voteSessionKey", "type": "bytes32" },
+              { "internalType": "uint256", "name": "totalVotes", "type": "uint256" }
+            ],
+            "internalType": "struct IVoteTracker.SystemVoteDetails",
+            "name": "details",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              { "internalType": "address", "name": "token", "type": "address" },
+              { "internalType": "bytes32", "name": "reactorKey", "type": "bytes32" },
+              { "internalType": "uint256", "name": "totalVotes", "type": "uint256" }
+            ],
+            "internalType": "struct IVoteTracker.SystemAllocation[]",
+            "name": "votes",
+            "type": "tuple[]"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct IVoteTracker.SystemVotes",
+        "name": "votesAtRollover",
+        "type": "tuple"
+      }
+    ],
+    "name": "VoteSessionRollover",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "DOMAIN_NAME",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "DOMAIN_VERSION",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "EIP191_HEADER",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "EIP712_DOMAIN_TYPEHASH",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "EVENT_TYPE_CYCLECOMPLETE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "EVENT_TYPE_DEPOSIT",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "EVENT_TYPE_SLASH",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "EVENT_TYPE_TRANSFER",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "EVENT_TYPE_VOTE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "EVENT_TYPE_WITHDRAW",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "EVENT_TYPE_WITHDRAWALREQUEST",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ONE_WITH_EIGHTEEN_PRECISION",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "USER_VOTE_ALLOCATION_ITEM_TYPEHASH",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "USER_VOTE_PAYLOAD_TYPEHASH",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "currentDomainSeparator",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "currentSigningChainId",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "eventProxy",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "getMaxVoteBalance",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getReactorKeys",
+    "outputs": [{ "internalType": "bytes32[]", "name": "reactorKeys", "type": "bytes32[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getSettings",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "balanceTrackerAddress", "type": "address" },
+          { "internalType": "uint256", "name": "voteEveryBlockLimit", "type": "uint256" },
+          { "internalType": "uint256", "name": "lastProcessedEventId", "type": "uint256" },
+          { "internalType": "bytes32", "name": "voteSessionKey", "type": "bytes32" }
+        ],
+        "internalType": "struct IVoteTracker.VoteTrackSettings",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getSystemVotes",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "voteSessionKey", "type": "bytes32" },
+              { "internalType": "uint256", "name": "totalVotes", "type": "uint256" }
+            ],
+            "internalType": "struct IVoteTracker.SystemVoteDetails",
+            "name": "details",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              { "internalType": "address", "name": "token", "type": "address" },
+              { "internalType": "bytes32", "name": "reactorKey", "type": "bytes32" },
+              { "internalType": "uint256", "name": "totalVotes", "type": "uint256" }
+            ],
+            "internalType": "struct IVoteTracker.SystemAllocation[]",
+            "name": "votes",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct IVoteTracker.SystemVotes",
+        "name": "systemVotes",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "getUserVotes",
+    "outputs": [
+      {
+        "components": [
+          {
+            "components": [
+              { "internalType": "uint256", "name": "totalUsedVotes", "type": "uint256" },
+              { "internalType": "uint256", "name": "totalAvailableVotes", "type": "uint256" }
+            ],
+            "internalType": "struct IVoteTracker.UserVoteDetails",
+            "name": "details",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "reactorKey", "type": "bytes32" },
+              { "internalType": "uint256", "name": "amount", "type": "uint256" }
+            ],
+            "internalType": "struct UserVoteAllocationItem[]",
+            "name": "votes",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct IVoteTracker.UserVotes",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "token", "type": "address" },
+          { "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "internalType": "struct TokenBalance[]",
+        "name": "balances",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "getVotingPower",
+    "outputs": [{ "internalType": "uint256", "name": "votes", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getVotingTokens",
+    "outputs": [{ "internalType": "address[]", "name": "tokens", "type": "address[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "eventProxyAddress", "type": "address" }],
+    "name": "init",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "eventProxy", "type": "address" },
+      { "internalType": "bytes32", "name": "initialVoteSession", "type": "bytes32" },
+      { "internalType": "address", "name": "balanceTracker", "type": "address" },
+      { "internalType": "uint256", "name": "signingOnChain", "type": "uint256" },
+      {
+        "components": [
+          { "internalType": "address", "name": "token", "type": "address" },
+          { "internalType": "uint256", "name": "multiplier", "type": "uint256" }
+        ],
+        "internalType": "struct IVoteTracker.VoteTokenMultipler[]",
+        "name": "voteTokens",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "lastUserProxyVoteBlock",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "networkSettings",
+    "outputs": [
+      { "internalType": "bytes32", "name": "domainSeparator", "type": "bytes32" },
+      { "internalType": "uint256", "name": "chainId", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "sender", "type": "address" },
+      { "internalType": "bytes32", "name": "eventType", "type": "bytes32" },
+      { "internalType": "bytes", "name": "data", "type": "bytes" }
+    ],
+    "name": "onEventReceive",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  { "inputs": [], "name": "pause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [],
+    "name": "paused",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "name": "placementTokens",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "proxySubmitters",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [{ "internalType": "address", "name": "contractAddress", "type": "address" }],
+    "name": "setBalanceTrackerAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "voteEveryBlockLimit", "type": "uint256" }],
+    "name": "setProxyRateLimit",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address[]", "name": "submitters", "type": "address[]" },
+      { "internalType": "bool", "name": "allowed", "type": "bool" }
+    ],
+    "name": "setProxySubmitters",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "token", "type": "address" },
+          { "internalType": "bytes32", "name": "key", "type": "bytes32" }
+        ],
+        "internalType": "struct IVoteTracker.VotingLocation[]",
+        "name": "reactorKeys",
+        "type": "tuple[]"
+      },
+      { "internalType": "bool", "name": "allowed", "type": "bool" }
+    ],
+    "name": "setReactorKeys",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "chainId", "type": "uint256" }],
+    "name": "setSigningChainId",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "token", "type": "address" },
+          { "internalType": "uint256", "name": "multiplier", "type": "uint256" }
+        ],
+        "internalType": "struct IVoteTracker.VoteTokenMultipler[]",
+        "name": "multipliers",
+        "type": "tuple[]"
+      }
+    ],
+    "name": "setVoteMultiplers",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "settings",
+    "outputs": [
+      { "internalType": "address", "name": "balanceTrackerAddress", "type": "address" },
+      { "internalType": "uint256", "name": "voteEveryBlockLimit", "type": "uint256" },
+      { "internalType": "uint256", "name": "lastProcessedEventId", "type": "uint256" },
+      { "internalType": "bytes32", "name": "voteSessionKey", "type": "bytes32" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "name": "systemAggregations",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "inputs": [], "name": "unpause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [{ "internalType": "address[]", "name": "accounts", "type": "address[]" }],
+    "name": "updateUserVoteTotals",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "userNonces",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "userVoteDetails",
+    "outputs": [
+      { "internalType": "uint256", "name": "totalUsedVotes", "type": "uint256" },
+      { "internalType": "uint256", "name": "totalAvailableVotes", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "bytes32", "name": "", "type": "bytes32" }
+    ],
+    "name": "userVoteItems",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "userVoteKeys",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "account", "type": "address" },
+          { "internalType": "bytes32", "name": "voteSessionKey", "type": "bytes32" },
+          { "internalType": "uint256", "name": "nonce", "type": "uint256" },
+          { "internalType": "uint256", "name": "chainId", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalVotes", "type": "uint256" },
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "reactorKey", "type": "bytes32" },
+              { "internalType": "uint256", "name": "amount", "type": "uint256" }
+            ],
+            "internalType": "struct UserVoteAllocationItem[]",
+            "name": "allocations",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct UserVotePayload",
+        "name": "userVotePayload",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          { "internalType": "enum IVoteTracker.SignatureType", "name": "signatureType", "type": "uint8" },
+          { "internalType": "uint8", "name": "v", "type": "uint8" },
+          { "internalType": "bytes32", "name": "r", "type": "bytes32" },
+          { "internalType": "bytes32", "name": "s", "type": "bytes32" }
+        ],
+        "internalType": "struct IVoteTracker.Signature",
+        "name": "signature",
+        "type": "tuple"
+      }
+    ],
+    "name": "vote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "account", "type": "address" },
+          { "internalType": "bytes32", "name": "voteSessionKey", "type": "bytes32" },
+          { "internalType": "uint256", "name": "nonce", "type": "uint256" },
+          { "internalType": "uint256", "name": "chainId", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalVotes", "type": "uint256" },
+          {
+            "components": [
+              { "internalType": "bytes32", "name": "reactorKey", "type": "bytes32" },
+              { "internalType": "uint256", "name": "amount", "type": "uint256" }
+            ],
+            "internalType": "struct UserVoteAllocationItem[]",
+            "name": "allocations",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct UserVotePayload",
+        "name": "userVotePayload",
+        "type": "tuple"
+      }
+    ],
+    "name": "voteDirect",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "voteMultipliers",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "votingTokens",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
