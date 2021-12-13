@@ -87,11 +87,7 @@ yarn verify --network mainnet
 yarn start
 ```
 
-### Deploy
-
-```
-yarn deploy:api
-```
+Open [localhost:3000](http://localhost:3000/api/user?address=0x0000000000000000000000000000000000000000) to see the API
 
 ## Lint
 

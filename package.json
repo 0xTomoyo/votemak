@@ -31,7 +31,6 @@
     "coverage": "yarn typechain && hardhat coverage --solcoverjs ./.solcover.js --temp artifacts --testfiles \"./test/**/*.ts\"",
     "deploy": "hardhat deploy",
     "verify": "hardhat etherscan-verify",
-    "deploy:api": "vercel deploy --prod",
     "lint": "yarn prettier && yarn lint:sol && yarn lint:ts",
     "lint:sol": "solhint --config ./.solhint.json --ignore-path ./.gitignore \"contracts/**/*.sol\" --fix",
     "lint:ts": "eslint --config ./.eslintrc.json --ignore-path ./.gitignore --ext .js,.ts . --fix",
