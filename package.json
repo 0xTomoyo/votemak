@@ -42,7 +42,7 @@
     "typechain": "cross-env TS_NODE_TRANSPILE_ONLY=true hardhat typechain",
     "snapshot": "ts-node src/snapshot.ts && yarn prettier:data",
     "snapshot-reactors": "ts-node src/reactors.ts && yarn prettier:data",
-    "generate": "ts-node src/index.ts && yarn prettier:data",
+    "generate": "ts-node src/generate.ts && yarn prettier:data",
     "validate": "ts-node src/validate.ts"
   },
   "devDependencies": {
