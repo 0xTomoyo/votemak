@@ -13,7 +13,7 @@ Multisig: [0x8CA6E5e53928e8E94a72F8c1Fb494Afda23D7C61](https://etherscan.io/addr
 ## Install
 
 ```
-yarn
+yarn install
 yarn compile
 ```
 
