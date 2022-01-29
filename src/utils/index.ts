@@ -40,17 +40,17 @@ export async function getReactorVotes(userVotesList: UserVotesList): Promise<Rea
 
 export async function getTokenToReactorKey(voteTracker: VoteTracker, multicall: Multicall): Promise<TokenToReactorKey> {
   const reactorKeys = await voteTracker.getReactorKeys();
-  const calls = reactorKeys.map(reactorKey => ({
+  const calls = reactorKeys.map((reactorKey: string) => ({
     target: voteTracker.address,
     callData: voteTracker.interface.encodeFunctionData("placementTokens", [reactorKey]),
   }));
   const encodedData = await multicall.callStatic.aggregate(calls, { blockTag: END_BLOCK_VOTETRACKER });
-  const tokens: string[] = encodedData.returnData.map(returnData => {
+  const tokens: string[] = encodedData.returnData.map((returnData: string) => {
     const decoded = voteTracker.interface.decodeFunctionResult("placementTokens", returnData);
     return decoded[0];
   });
   const tokenToReactorKey: TokenToReactorKey = {};
-  reactorKeys.forEach((reactorKey, index) => {
+  reactorKeys.forEach((reactorKey: string, index: number) => {
     tokenToReactorKey[tokens[index]] = reactorKey;
   });
   return tokenToReactorKey;
